@@ -1,13 +1,12 @@
 use std::fs;
-use std::io::Empty;
 use std::path::Path;
 
-fn main() {
+
+pub fn task_1() {
     let path = Path::new("./input1");
     let contents = fs::read_to_string(path)
         .expect("Should have been able to read the file");
     let mut values: Vec<&str> = contents.split("\n\n").collect();
-
 
     let mut max = 0;
     for i in values{
