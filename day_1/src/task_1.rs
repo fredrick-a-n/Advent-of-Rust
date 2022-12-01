@@ -1,13 +1,14 @@
 use std::fs;
 use std::path::Path;
 
-pub fn task_2(){
+
+pub fn task_1() {
     let path = Path::new("./input1");
     let contents = fs::read_to_string(path)
         .expect("Should have been able to read the file");
-    let mut values: Vec<&str> = contents.split("\n\n").collect();
+    let values: Vec<&str> = contents.split("\n\n").collect();
 
-    let mut k: Vec<i32> = Vec::new();
+    let mut max = 0;
     for i in values{
         let w: Vec<&str> = i.split("\n").collect();
         let mut sum = 0;
@@ -16,11 +17,10 @@ pub fn task_2(){
                 sum += j.parse::<i32>().unwrap();
             }
         }
-        k.push(sum);
+        if sum > max{
+            max = sum;
+        }
     }   
-
-    k.sort();
-    let s = k.pop().unwrap_or_default() + k.pop().unwrap_or_default()+ k.pop().unwrap_or_default();
-    println!("The sum of the top weights is {}", s)
+    println!("The most weight is {}", max)
 
 }
