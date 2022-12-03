@@ -2,6 +2,8 @@ use std::collections::HashMap;
 use std::fs;
 use std::path::Path;
 
+// A = rock, B = paper, C = scissors
+// Y = draw, X = loss, Z = win
 fn initiate_map() -> HashMap<&'static str, i32> {
     let mut win_pattern:HashMap<&str, i32> = HashMap::new();
     win_pattern.insert("A Y", 3+1);
@@ -17,12 +19,11 @@ fn initiate_map() -> HashMap<&'static str, i32> {
 }
 
 pub fn task_2(){
-    let path = Path::new("./input1");
-    let contents = fs::read_to_string(path)
+    let contents = fs::read_to_string(Path::new("./input1"))
         .expect("Should have been able to read the file");
-    let win_pattern:HashMap<&str, i32> = initiate_map();
+    let win_pattern = initiate_map();
 
-    let mut points: i32 = 0;
+    let mut points = 0;
     let temp = contents.split("\n");
     for i in temp{
         points += win_pattern.get(i).unwrap();

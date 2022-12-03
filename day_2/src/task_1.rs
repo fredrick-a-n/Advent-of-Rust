@@ -19,12 +19,11 @@ fn initiate_map() -> HashMap<&'static str, i32> {
 }
 
 pub fn task_1(){
-    let path = Path::new("./input1");
-    let contents = fs::read_to_string(path)
+    let contents = fs::read_to_string(Path::new("./input1"))
         .expect("Should have been able to read the file");
     let win_pattern = initiate_map();
     
-    let mut points: i32 = 0;
+    let mut points = 0;
     let temp = contents.split("\n");
     for i in temp{
         points += win_pattern.get(i).unwrap();

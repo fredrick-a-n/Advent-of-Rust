@@ -3,8 +3,7 @@ use std::path::Path;
 
 
 pub fn task_1() {
-    let path = Path::new("./input1");
-    let contents = fs::read_to_string(path)
+    let contents = fs::read_to_string(Path::new("./input1"))
         .expect("Should have been able to read the file");
     let values: Vec<&str> = contents.split("\n\n").collect();
 
