@@ -12,8 +12,7 @@ pub fn task_1(){
         let s = i.split_at(i.len()/2);
         let a: HashSet<char> = HashSet::from_iter(s.0.chars());
         let b: HashSet<char> = HashSet::from_iter(s.1.chars());
-        let diff = a.intersection(&b);
-        for j in diff{
+        for j in a.intersection(&b){
             if j.is_uppercase() {
                 sum += (j.clone() as i32) - ('A' as i32) + 27;
             } else {

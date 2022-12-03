@@ -12,8 +12,7 @@ pub fn task_2(){
         let a: HashSet<char> = HashSet::from_iter(bags.get(i * 3).unwrap().chars());
         let b: HashSet<char> = HashSet::from_iter(bags.get(i * 3 + 1).unwrap().chars());
         let c: HashSet<char> = HashSet::from_iter(bags.get(i * 3 + 2).unwrap().chars());
-        let diff = a.iter().filter(|k| b.contains(k)).filter(|k| c.contains(k));
-        for j in diff{
+        for j in a.iter().filter(|k| b.contains(k)).filter(|k| c.contains(k)){
             if j.is_uppercase() {
                 sum += (j.clone() as i32) - ('A' as i32) + 27;
             } else {
