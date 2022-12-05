@@ -12,11 +12,33 @@ pub fn task_2() {
 
 
     //init data
-    let mut re= r"(\[[A-Z]\]|\s{3})".to_owned();    
     let s = data.get(0).unwrap();
-    let mut asd: Vec<&str> = s.split("\n").collect();
-    let line_num = asd.pop().unwrap().trim().chars().next_back().unwrap().to_digit(10).unwrap() ;
+    let mut boxes = init_data(s);
+
+    //the algo
+    let re2 = Regex::new(r"move ([0-9]+) from ([0-9]+) to ([0-9]+)").unwrap();
+    for cap in re2.captures_iter(data.get(1).unwrap()){
+        let n = cap[1].parse::<usize>().unwrap();
+        let source = boxes.get_mut(cap[2].parse::<usize>().unwrap()-1).unwrap();
+        let stack = &mut source.split_off(source.len()-n);
+        for i in stack{
+            boxes.get_mut(cap[3].parse::<usize>().unwrap()-1).unwrap().push_back(i.clone());
+        }
+    }
+
+    for k in boxes{
+        print!("{}", k.back().unwrap_or(&' '));
+    }
+    print!("\n");
+
+}
+
+
+fn init_data(s: &str) -> Vec<LinkedList<char>>{
+    let line_num = s.split("\n").collect::<Vec<&str>>().pop().unwrap().trim().chars().next_back().unwrap().to_digit(10).unwrap() ;
     let mut boxes: Vec<LinkedList<char>> = vec![LinkedList::new(); line_num as usize];
+
+    let mut re = r"(\[[A-Z]\]|\s{3})".to_owned();    
     for _i in 1..line_num{
         re.push_str(r"\s(\[[A-Z]\]|\s{3})");
         
@@ -31,23 +53,5 @@ pub fn task_2() {
             }
         }
     }
-
-
-    //the algo
-    let re2 = Regex::new(r"move ([0-9]+) from ([0-9]+) to ([0-9]+)").unwrap();
-    for cap in re2.captures_iter(data.get(1).unwrap()){
-        let n = cap[1].parse::<usize>().unwrap();
-        let kek = boxes.get_mut(cap[2].parse::<usize>().unwrap()-1).unwrap();
-            let t = &mut kek.split_off(kek.len()-n);
-        for i in t{
-            boxes.get_mut(cap[3].parse::<usize>().unwrap()-1).unwrap().push_back(i.clone());
-        }
-    }
-
-    for i  in 0..line_num{
-        let k = boxes.get(i as usize).unwrap();
-        print!("{}", k.back().unwrap_or(&' '));
-    }
-    print!("\n");
-
+    return boxes;
 }

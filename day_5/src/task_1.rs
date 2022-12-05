@@ -12,15 +12,41 @@ pub fn task_1() {
 
 
     //init data
-    let mut re= r"(\[[A-Z]\]|\s{3})".to_owned();    
     let s = data.get(0).unwrap();
-    let mut asd: Vec<&str> = s.split("\n").collect();
-    let line_num = asd.pop().unwrap().trim().chars().next_back().unwrap().to_digit(10).unwrap() ;
-    let mut boxes: Vec<LinkedList<char>> = vec![LinkedList::new(); line_num as usize];
-    for _i in 1..line_num{
-        re.push_str(r"\s(\[[A-Z]\]|\s{3})");
-        
+    let mut boxes = init_data(s);
+
+
+    //The moving
+    let re2 = Regex::new(r"move ([0-9]+) from ([0-9]+) to ([0-9]+)").unwrap();
+    for cap in re2.captures_iter(data.get(1).unwrap()){
+        let n = cap[1].parse::<usize>().unwrap();
+        for _i in 0..n{
+            let source = boxes.get_mut(cap[2].parse::<usize>().unwrap()-1).unwrap().pop_back().unwrap();
+            boxes.get_mut(cap[3].parse::<usize>().unwrap()-1).unwrap().push_back(source.clone());
+        }
     }
+
+    //The output
+    for k in boxes{
+        print!("{}", k.back().unwrap_or(&' '));
+    }
+    print!("\n");
+
+}
+
+
+
+
+fn init_data(s: &str) -> Vec<LinkedList<char>>{
+    let line_num = s.split("\n").collect::<Vec<&str>>().pop().unwrap().trim().chars().next_back().unwrap().to_digit(10).unwrap() ;
+    let mut boxes: Vec<LinkedList<char>> = vec![LinkedList::new(); line_num as usize];
+
+    let mut re= r"(\[[A-Z]\]|\s{3})".to_owned();    
+    for _i in 1..line_num {
+        re.push_str(r"\s(\[[A-Z]\]|\s{3})");
+    }
+        
+
     re.push_str(r"\n");
     for cap in Regex::new(&re).unwrap().captures_iter(&s){
         for i in 0..line_num{
@@ -31,23 +57,5 @@ pub fn task_1() {
             }
         }
     }
-
-
-    //The moving
-    let re2 = Regex::new(r"move ([0-9]+) from ([0-9]+) to ([0-9]+)").unwrap();
-    for cap in re2.captures_iter(data.get(1).unwrap()){
-        let n = cap[1].parse::<usize>().unwrap();
-        for _i in 0..n{
-            let kek = boxes.get_mut(cap[2].parse::<usize>().unwrap()-1).unwrap().pop_back().unwrap();
-            boxes.get_mut(cap[3].parse::<usize>().unwrap()-1).unwrap().push_back(kek.clone());
-        }
-    }
-
-    //The output
-    for i  in 0..line_num{
-        let k = boxes.get(i as usize).unwrap();
-        print!("{}", k.back().unwrap_or(&' '));
-    }
-    print!("\n");
-
+    return boxes;
 }
