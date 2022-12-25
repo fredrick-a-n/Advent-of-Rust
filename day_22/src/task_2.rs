@@ -1,4 +1,3 @@
-use std::fmt;
 use std::collections::LinkedList;
 use std::fs;
 use std::path::Path;
@@ -10,7 +9,7 @@ enum Move {
     Move(usize)
 }
 
-const kek: usize = 50;
+const KEK: usize = 50;
 
 pub fn task_2() {
     let contents = fs::read_to_string(Path::new("./input1"))
@@ -40,7 +39,7 @@ pub fn task_2() {
                 || board[new_pos.1 as usize].get(new_pos.0 as usize).is_none()
                 || board[new_pos.1 as usize][new_pos.0 as usize] == ' '{
                     println!("{}    {}", dir.0, dir.1);
-                    let (qr, qc, ndir) = match (position.1 / kek, position.0 / kek, dir) {
+                    let (qr, qc, ndir) = match (position.1 / KEK, position.0 / KEK, dir) {
                         (0,1,(-1,0)) => (2,0,(0,1)),
                         (0,1,(0,-1)) => (3,0,(1,0)),
                         (0,2,(1,0)) => (2,1,(-1,0)),
@@ -57,24 +56,24 @@ pub fn task_2() {
                         (3,0,(0,1)) => (0,2,(0,1)),
                         _ => unreachable!(),
                     };
-                    let (dr, dc) = (position.1 % kek, position.0 % kek);
-                    let i = [dr, dc, kek-1-dr, kek-1-dc][match dir {
+                    let (dr, dc) = (position.1 % KEK, position.0 % KEK);
+                    let i = [dr, dc, KEK-1-dr, KEK-1-dc][match dir {
                         (1,0) => 0,
                         (0,1) => 1,
                         (-1,0) => 2,
                         (0,-1) => 3,
                         _ => unreachable!()
                     }];
-                    let (nr, nc) = [(kek-1,i), (i,0), (0,kek-1-i), (kek-1-i,kek-1)][match dir {
+                    let (nr, nc) = [(KEK-1,i), (i,0), (0,KEK-1-i), (KEK-1-i,KEK-1)][match dir {
                         (1,0) => 0,
                         (0,1) => 1,
                         (-1,0) => 2,
                         (0,-1) => 3,
                         _ => unreachable!()
                     }];
-                    if board[qr * kek + nr][qc * kek + nc] != '#' {
+                    if board[qr * KEK + nr][qc * KEK + nc] != '#' {
                         dir = ndir;
-                        position = ( qc * kek + nc, qr * kek + nr)
+                        position = ( qc * KEK + nc, qr * KEK + nr)
                     } else {
                         break;
                     }
