@@ -2,10 +2,9 @@ use std::fs;
 use std::path::Path;
 
 pub fn task_2() {
-    let contents = fs::read_to_string(Path::new("./input1"))
-        .expect("Should have been able to read the file");
-
-    let rows: Vec<(Vec<i32>, Vec<i32>)> = contents.split("\n").map(|row| 
+    let rows = fs::read_to_string(Path::new("./input1"))
+        .expect("Should have been able to read the file")
+        .split("\n").map(|row| 
         row.split(":").last().unwrap().replace("  ", " ").split("|").map(|x| 
             x.trim().split(" ").map(|y| y.parse::<i32>().unwrap()).collect::<Vec<i32>>()
         ).collect::<Vec<Vec<i32>>>()
@@ -19,9 +18,6 @@ pub fn task_2() {
             cards[j] += cards[i];
         }
     }
-
-    let point: usize = cards.iter().sum();
     
-    println!("Task 2: {}", point);
-
+    println!("Task 2: {}", cards.iter().sum::<usize>());
 } 
