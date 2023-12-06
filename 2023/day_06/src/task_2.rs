@@ -14,9 +14,9 @@ pub fn task_2() {
     t1 = if t1.fract() == 0.0 {t1+1.0} else {t1};
     let ans = t2.ceil() - t1.ceil();
     println!("{}", ans);
-    // t = time waited, x = total time, y = distance
-    // y = (x-t)*t
-    // y = xt - t^2x
-    // 0 = t^2 - xt + y
-    // t = x/2 ± sqrt(x^2/4 - y)
+    // x = time waited, t = total time, y = distance
+    // y = (t-x)*x
+    // y = tx - x^2
+    // 0 = x^2 - tx + y
+    // x = t/2 ± sqrt(t^2/4 - y)
 }   

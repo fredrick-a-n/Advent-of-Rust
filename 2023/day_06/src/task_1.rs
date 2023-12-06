@@ -20,10 +20,10 @@ pub fn task_1() {
         })
         .reduce(|a, b| a*b).unwrap();
     println!("{}", ans);
-
-    // t = tid väntad, x = tid totalt, y = sträcka
-    // y = (x-t)*t
-    // y = xt - t^2x
-    // 0 = t^2 - xt + y
+    // x = time waited, t = total time, y = distance
+    // y = (t-x)*x
+    // y = tx - x^2
+    // 0 = x^2 - tx + y
+    // x = t/2 ± sqrt(t^2/4 - y)
 }   
 
