@@ -1,7 +1,6 @@
-
 pub fn task_2() {
     let (p, v) = include_str!("../input1").split_once("\n\n").unwrap();
-    let mut transforms: Vec<(usize,usize)> = vec![(0,0); 36usize.pow(4)];
+    let mut transforms: Vec<(usize,usize)> = vec![(0,0); 36usize.pow(3)];
     let mut pos: Vec<usize> = Vec::new();
     for line in v.lines() {
         let (i, t) = line.split_once("=").unwrap();
@@ -27,14 +26,9 @@ pub fn task_2() {
                 _ => panic!("Invalid input"),
             }
         }).filter(|x| x.is_some()).map(|x| x.unwrap()).collect();
-
         i += 1;    
-        println!("{}", i);
     }
-
-    let gcm = fastest.iter().fold(1, |acc, x| num::integer::lcm(acc, *x));
-
-    println!("Task 2: {}", gcm);
+    println!("Task 2: {}", fastest.iter().fold(1, |acc, x| num::integer::lcm(acc, *x)))
 }   
 
 fn to_b36(s: &str) -> usize {

@@ -4,7 +4,6 @@ pub fn task_1() {
     for line in v.lines() {
         let (i, t) = line.split_once("=").unwrap();
         let i: usize = to_b36(i);
-        
         let t = t.replace("(", "").replace(")", "");
         let (l, r) = t.split_once(",").unwrap();
         transforms[i] = (to_b36(l), to_b36(r));

@@ -34,8 +34,7 @@ impl Hand {
 }
 
 fn get_max_counts(cards: &Vec<u32>) -> (u8, u8) {
-    (2..15).rev().map(|i| cards.iter().filter(|&x| *x == i).count() as u8)
-        .fold((0,0), |acc,j| if j > acc.0 {(j, acc.0)} else if j > acc.1 {(acc.0, j)} else {acc})
+    (2..15).rev().map(|i| cards.iter().filter(|&x| *x == i).count() as u8).fold((0,0), |acc,j| if j > acc.0 {(j, acc.0)} else if j > acc.1 {(acc.0, j)} else {acc})
 }
 
 fn add_jokers((a,b):(u8,u8), cards: &Vec<u32>) -> (u8,u8) {
