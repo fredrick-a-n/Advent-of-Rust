@@ -34,16 +34,14 @@ pub fn task_2() {
                                 galaxies[i].0.max(galaxies[j].0) > r
                                     && galaxies[i].0.min(galaxies[j].0) < r
                             })
-                            .map(|_| 999999)
-                            .sum::<i128>()
+                            .fold(0, |acc, _| acc + 999999)
                         + empty_cols
                             .iter()
                             .filter(|&&c| {
                                 galaxies[i].1.max(galaxies[j].1) > c
                                     && galaxies[i].1.min(galaxies[j].1) < c
                             })
-                            .map(|_| 999999)
-                            .sum::<i128>()
+                            .fold(0, |acc, _| acc + 999999)
                 })
                 .sum::<i128>()
         })
