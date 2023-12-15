@@ -1,33 +1,30 @@
 pub fn task_2() {
     let mut boxes: Vec<Vec<(&str, usize)>> = vec![Vec::new(); 256];
-    for lens in include_str!("../testinput").split(",") {
+    for lens in include_str!("../input1").split(",") {
         if lens.contains("=") {
-            let (m, i) = lens.split_once("=").unwrap();
+            let (l, i) = lens.split_once("=").unwrap();
             let i = i.parse::<usize>().unwrap();
-            let mj = m.chars().fold(0, |acc, x| ((acc + x as usize) * 17) % 256);
-            if let Some(j) = boxes[mj].iter().position(|x| x.0 == m) {
-                boxes[mj][j].1 = i;
+            let hash = l.chars().fold(0, |acc, x| ((acc + x as usize) * 17) % 256);
+            if let Some(j) = boxes[hash].iter().position(|x| x.0 == l) {
+                boxes[hash][j].1 = i;
             } else {
-                boxes[mj].push((m, i));
+                boxes[hash].push((l, i));
             }
         } else {
-            let m = lens.split_once("-").unwrap().0;
-            let mj = m.chars().fold(0, |acc, x| ((acc + x as usize) * 17) % 256);
-            if let Some(j) = boxes[mj].iter().position(|x| x.0 == m) {
-                boxes[mj].remove(j);
+            let l = lens.split_once("-").unwrap().0;
+            let hash = l.chars().fold(0, |acc, x| ((acc + x as usize) * 17) % 256);
+            if let Some(j) = boxes[hash].iter().position(|x| x.0 == l) {
+                boxes[hash].remove(j);
             }
         }
     }
-    let score = boxes
-        .iter()
-        .enumerate()
-        .map(|(i, x)| {
-            x.iter()
+    println!(
+        "Task 2: {}",
+        boxes.iter().enumerate().fold(0, |acc, (i, x)| {
+            acc + x
+                .iter()
                 .enumerate()
-                .map(|(j, x)| (i + 1) * (j + 1) * x.1)
-                .sum::<usize>()
+                .fold(0, |acc, (j, x)| acc + (i + 1) * (j + 1) * x.1)
         })
-        .sum::<usize>();
-
-    println!("Task 2: {}", score)
+    )
 }
