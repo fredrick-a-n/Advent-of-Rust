@@ -18,7 +18,7 @@ pub fn task_2() {
         .map(|(pos, dir)| {
             let mut energized: HashSet<(i8, i8)> = HashSet::new();
             let mut history: HashSet<((i8, i8), (i8, i8))> = HashSet::new();
-            rec(&mut energized, &mut history, &grid, pos, dir);
+            rec(&mut energized, &mut history, &grid, pos, dir, &grid.len(), &grid[0].len());
             energized.len()
         })
         .max()
@@ -33,11 +33,15 @@ fn rec(
     grid: &Vec<Vec<char>>,
     pos: (i8, i8),
     dir: (i8, i8),
+    l1: &usize,
+    l2: &usize,
 ) {
-    if pos.0 < 0 || pos.0 >= grid.len() as i8 || pos.1 < 0 || pos.1 >= grid[0].len() as i8 {
-        return;
-    }
-    if history.contains(&(pos, dir)) {
+    if pos.0 < 0
+        || pos.0 >= *l1 as i8
+        || pos.1 < 0
+        || pos.1 >= *l2 as i8
+        || history.contains(&(pos, dir))
+    {
         return;
     }
     energized.insert(pos);
@@ -49,6 +53,8 @@ fn rec(
             grid,
             (pos.0 - dir.1, pos.1 - dir.0),
             (-dir.1, -dir.0),
+            l1,
+            l2,
         ),
         ('\\', _) => rec(
             energized,
@@ -56,14 +62,16 @@ fn rec(
             grid,
             (pos.0 + dir.1, pos.1 + dir.0),
             (dir.1, dir.0),
+            l1,
+            l2,
         ),
         ('-', (_, 0)) => {
-            rec(energized, history, grid, (pos.0, pos.1 + 1), (0, 1));
-            rec(energized, history, grid, (pos.0, pos.1 - 1), (0, -1))
+            rec(energized, history, grid, (pos.0, pos.1 + 1), (0, 1), l1, l2);
+            rec(energized, history, grid, (pos.0, pos.1 - 1), (0, -1), l1, l2)
         }
         ('|', (0, _)) => {
-            rec(energized, history, grid, (pos.0 + 1, pos.1), (1, 0));
-            rec(energized, history, grid, (pos.0 - 1, pos.1), (-1, 0))
+            rec(energized, history, grid, (pos.0 + 1, pos.1), (1, 0), l1, l2);
+            rec(energized, history, grid, (pos.0 - 1, pos.1), (-1, 0), l1, l2)
         }
         _ => rec(
             energized,
@@ -71,6 +79,8 @@ fn rec(
             grid,
             (pos.0 + dir.0, pos.1 + dir.1),
             dir,
+            l1,
+            l2,
         ),
     }
 }

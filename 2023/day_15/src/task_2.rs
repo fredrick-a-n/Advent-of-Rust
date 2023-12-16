@@ -1,8 +1,8 @@
 pub fn task_2() {
     let mut boxes: Vec<Vec<(&str, usize)>> = vec![Vec::new(); 256];
-    for lens in include_str!("../input1").split(",") {
-        if lens.contains("=") {
-            let (l, i) = lens.split_once("=").unwrap();
+    for lens in include_str!("../input1").split(',') {
+        if lens.contains('=') {
+            let (l, i) = lens.split_once('=').unwrap();
             let i = i.parse::<usize>().unwrap();
             let hash = l.chars().fold(0, |acc, x| ((acc + x as usize) * 17) % 256);
             if let Some(j) = boxes[hash].iter().position(|x| x.0 == l) {

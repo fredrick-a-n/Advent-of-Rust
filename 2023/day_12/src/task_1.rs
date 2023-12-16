@@ -1,11 +1,11 @@
 pub fn task_1() {
     let rows = include_str!("../input1")
         .lines()
-        .map(|line| line.split_once(" ").unwrap())
+        .map(|line| line.split_once(' ').unwrap())
         .map(|(springs, nums)| {
             (
                 springs.chars().collect::<Vec<char>>(),
-                nums.split(",")
+                nums.split(',')
                     .map(|n| n.parse::<i32>().unwrap())
                     .collect::<Vec<i32>>(),
             )
