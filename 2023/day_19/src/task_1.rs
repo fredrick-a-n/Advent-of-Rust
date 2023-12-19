@@ -41,8 +41,8 @@ pub fn task_1() {
         })
         .collect::<Vec<HashMap<char, i64>>>();
 
-    let mut accepted: Vec<usize> = Vec::new();
-    for (i, inp) in input.iter().enumerate() {
+    let mut accepted: Vec<HashMap<char, i64>> = Vec::new();
+    for inp in input {
         let mut key = "in";
         while key != "A" && key != "R" {
             let transform = transforms.get(key).unwrap();
@@ -69,12 +69,12 @@ pub fn task_1() {
             }
         }
         if key == "A" {
-            accepted.push(i);
+            accepted.push(inp.clone());
         }
     }
     let score = accepted
         .iter()
-        .map(|i| input[*i].values().sum::<i64>())
+        .map(|i| i.values().sum::<i64>())
         .sum::<i64>();
     println!("Task 1: {}", score);
 }

@@ -35,8 +35,7 @@ pub fn task_2() {
             .map(|c| (*c, (1, 4001)))
             .collect::<HashMap<char, (i64, i64)>>(),
     )];
-    while !ranges.is_empty() {
-        let (key, mut input) = ranges.pop().unwrap();
+    while let Some((key, mut input)) = ranges.pop() {
         if key == "A" {
             accepted.push(input.clone());
             continue;
