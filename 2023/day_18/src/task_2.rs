@@ -6,7 +6,7 @@ pub fn task_2() {
     let mut pos = (0, 0);
     let mut area = 1.0;
     for step in steps {
-        let n_pos = match (step.0, step.1) {
+        let n_pos = match step {
             (n, "0)") => (pos.0, pos.1 + i64::from_str_radix(n, 16).unwrap() * 2),
             (n, "2)") => (pos.0, pos.1 - i64::from_str_radix(n, 16).unwrap() * 2),
             (n, "3)") => (pos.0 + i64::from_str_radix(n, 16).unwrap() * 2, pos.1),
